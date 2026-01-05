@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package user;
+
+service UsersService {
+  rpc FindOne (HeroById) returns (Hero);
+  rpc GetUserByEmail (GetUserByEmailRequest) returns (User);
+  rpc checkPassword(dataCheckPassword) returns (comparePassword);
+}
+
+message HeroById {
+  int32 id = 1;
+}
+
+message Hero {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string username = 3;
+  string role = 4;
+}
+
+message dataCheckPassword{
+  string password = 1;
+  string email= 2;
+}
+
+message comparePassword{
+  bool check = 1;
+}
