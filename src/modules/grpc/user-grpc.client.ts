@@ -14,10 +14,14 @@ export class UserGrpcClient implements OnModuleInit {
   }
 
   GetUserByEmail(data: {email: string}): Observable<User> {
-    return this.usersService.GetUserByEmail(data);
+    return this.usersService.getUserByEmail(data);
   }
 
   checkPassword(data: {password: string, email: string}): Observable<ComparePasswordResponse>{
     return this.usersService.checkPassword(data)
+  }
+
+  changePassword(data: {_id: string, oldPassword: string, newPassword: string}): Observable<User>{
+    return this.usersService.changePassword(data)
   }
 }

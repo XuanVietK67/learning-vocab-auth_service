@@ -3,23 +3,28 @@ syntax = "proto3";
 package user;
 
 service UsersService {
-  rpc FindOne (HeroById) returns (Hero);
-  rpc GetUserByEmail (GetUserByEmailRequest) returns (User);
+  rpc getUserByEmail (GetUserByEmailRequest) returns (User);
   rpc checkPassword(dataCheckPassword) returns (comparePassword);
+  rpc changePassword(dataChangePassword) returns (changePasswordResponse);
 }
 
-message HeroById {
-  int32 id = 1;
-}
-
-message Hero {
-  int32 id = 1;
-  string name = 2;
-}
 
 message GetUserByEmailRequest {
   string email = 1;
 }
+
+message dataCheckPassword{
+  string password = 1;
+  string email= 2;
+}
+
+message dataChangePassword{
+  string _id = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}
+
+// Expected response
 
 message User {
   string id = 1;
@@ -28,11 +33,11 @@ message User {
   string role = 4;
 }
 
-message dataCheckPassword{
-  string password = 1;
-  string email= 2;
-}
-
 message comparePassword{
   bool check = 1;
 }
+
+message changePasswordResponse{
+  string result=1;
+}
+

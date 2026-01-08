@@ -11,8 +11,9 @@ export type User={
 
 
 export interface UsersService{
-  GetUserByEmail(data: {email: string}):  Observable<User>
+  getUserByEmail(data: {email: string}):  Observable<User>
   checkPassword(data: {password: string, email: string}): Observable<ComparePasswordResponse>
+  changePassword(data: {_id: string, oldPassword: string, newPassword: string}): Observable<User>
 }
 
 export interface ComparePasswordResponse {

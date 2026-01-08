@@ -8,7 +8,8 @@
       {
         "include": "proto/**/*.proto",
         "outDir": "dist"
-      }
+      },
+      "modules/mail/templates/**/*"
     ],
     "watchAssets": true
   }

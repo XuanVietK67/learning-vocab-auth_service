@@ -42,7 +42,7 @@ import { LocalStrategy } from 'src/modules/auth/strategy/local.strategy';
       },
     }),
     UserGrpcModule,
-    PassportModule
+    PassportModule,
   ],
 })
 export class AuthModule {}

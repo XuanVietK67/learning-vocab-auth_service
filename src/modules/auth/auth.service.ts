@@ -4,8 +4,8 @@ import { UserGrpcClient } from 'src/modules/grpc/user-grpc.client';
 import { lastValueFrom } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 import { JwtService } from '@nestjs/jwt';
-import { isNull } from 'util';
 import { User } from 'src/modules/auth/dto/create-auth.dto';
+import { dataChangePassword } from 'src/types/auth/auth.type';
 
 @Injectable()
 export class AuthService {
@@ -59,5 +59,28 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async changePassword(dataChangePassword: dataChangePassword) {
+    const { user, data } = dataChangePassword;
+    const { email, userId } = user;
+    const targetUser = await lastValueFrom(
+      this.userGrpc.GetUserByEmail({ email }),
+    );
+    if (!targetUser) {
+      throw new RpcException({
+        code: 400,
+        message: 'Your email is incorrect',
+      });
+    }
+
+    try {
+      const newUser = await lastValueFrom(
+        this.userGrpc.changePassword({ ...data, _id: userId }),
+      );
+      return newUser;
+    } catch (error) {
+      return 'some thing went wrong';
+    }
   }
 }
